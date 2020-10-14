@@ -13,7 +13,7 @@
 
 **Date**: October, 2020.   
 
-This project is just to practice SpringBoot and also to show my tutor how my code was make.
+This project is just to practice SpringBoot and also to show my tutor how my code was made.
 
 # Preview🔍
 
