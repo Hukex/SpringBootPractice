@@ -11,11 +11,12 @@ import org.springframework.stereotype.Service;
 
 import com.game.entities.Genre;
 import com.game.enums.GenreEnum;
+import com.game.exceptions.GenreKONotFoundException;
 import com.game.repositories.GenreRepository;
-import com.game.services.GenreLoadService;
+import com.game.services.GenreService;
 
 @Service
-public class GenreLoadServiceImpl implements GenreLoadService {
+public class GenreServiceImpl implements GenreService {
 	@Autowired
 	private GenreRepository repo;
 	@Autowired
@@ -30,5 +31,13 @@ public class GenreLoadServiceImpl implements GenreLoadService {
 				genreList.add(cs.convert(GenreEnum.values()[i], Genre.class));
 		}
 		repo.saveAll(genreList);
+	}
+
+	@Override
+	public Genre findByGenre(GenreEnum genre) {
+		Genre g = repo.findByGenre(genre);
+		if (g == null)
+			throw new GenreKONotFoundException();
+		return g;
 	}
 }

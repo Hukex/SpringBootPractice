@@ -3,17 +3,17 @@ package com.game.dtos;
 import lombok.Data;
 
 @Data
-public class GameErrorDto {
+public class ErrorDto {
 
 	private String code;
 	private String message;
 
-	public GameErrorDto(String code, String message) {
+	public ErrorDto(String code, String message) {
 		this.code = code;
 		this.message = message;
 	}
 
-	public GameErrorDto() {
+	public ErrorDto() {
 
 	}
 

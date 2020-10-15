@@ -18,7 +18,7 @@ import com.game.services.GameService;
 public class GameController {
 
 	@Autowired
-	private GameService gameServiceImpl;
+	private GameService gameService;
 
 	@GetMapping("/game")
 	ResponseEntity<Long> getGameById(@RequestParam("id") Long id) {
@@ -27,12 +27,12 @@ public class GameController {
 
 	@GetMapping("/game/search")
 	ResponseEntity<Object> getGameByName(@RequestParam("name") String name) {
-		return ResponseEntity.status(HttpStatus.OK).body(gameServiceImpl.getGame(name));
+		return ResponseEntity.status(HttpStatus.OK).body(gameService.getGame(name));
 	}
 
 	@PostMapping("/game")
 	ResponseEntity<Object> addGame(@Valid @RequestBody GameRequest gameDto) {
-		return ResponseEntity.status(HttpStatus.OK).body("Added correctly \n" + gameServiceImpl.addGame(gameDto));
+		return ResponseEntity.status(HttpStatus.OK).body("Added correctly \n" + gameService.addGame(gameDto));
 	}
 
 	/*

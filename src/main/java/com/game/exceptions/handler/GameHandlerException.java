@@ -16,8 +16,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.game.dtos.GameErrorDto;
+import com.game.dtos.ErrorDto;
 import com.game.exceptions.generic.GameKOException;
+import com.game.exceptions.generic.GenreKOException;
 import com.game.exceptions.generic.NoContentException;
 import com.game.exceptions.generic.NotFoundException;
 
@@ -27,22 +28,29 @@ public class GameHandlerException extends ResponseEntityExceptionHandler {
 	@ResponseStatus(HttpStatus.OK)
 	@ExceptionHandler({ GameKOException.class })
 	@ResponseBody
-	public GameErrorDto gameKO(HttpServletRequest request, GameKOException exception) {
-		return new GameErrorDto("00", exception.getDetalle());
+	public ErrorDto gameKO(HttpServletRequest request, GameKOException exception) {
+		return new ErrorDto("00", exception.getDetalle());
+	}
+
+	@ResponseStatus(HttpStatus.OK)
+	@ExceptionHandler({ GenreKOException.class })
+	@ResponseBody
+	public ErrorDto genreKO(HttpServletRequest request, GenreKOException exception) {
+		return new ErrorDto("00", exception.getDetalle());
 	}
 
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ExceptionHandler({ NotFoundException.class })
 	@ResponseBody
-	public GameErrorDto notFoundRequest(HttpServletRequest request, NotFoundException exception) {
-		return new GameErrorDto("01", exception.getDetalle());
+	public ErrorDto notFoundRequest(HttpServletRequest request, NotFoundException exception) {
+		return new ErrorDto("01", exception.getDetalle());
 	}
 
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@ExceptionHandler({ NoContentException.class })
 	@ResponseBody
-	public GameErrorDto notContentRequest(HttpServletRequest request, NoContentException exception) {
-		return new GameErrorDto("01", exception.getDetalle());
+	public ErrorDto notContentRequest(HttpServletRequest request, NoContentException exception) {
+		return new ErrorDto("01", exception.getDetalle());
 	}
 
 	@Override
@@ -50,6 +58,6 @@ public class GameHandlerException extends ResponseEntityExceptionHandler {
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		List<String> errorMessages = ex.getBindingResult().getFieldErrors().stream().map(e -> e.getDefaultMessage())
 				.collect(Collectors.toList());
-		return new ResponseEntity<>(new GameErrorDto("02", errorMessages.toString()), HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(new ErrorDto("02", errorMessages.toString()), HttpStatus.BAD_REQUEST);
 	}
 }
