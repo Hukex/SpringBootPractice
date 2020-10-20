@@ -14,5 +14,10 @@ public interface GameService {
 
 	public GameResponse getGame(String title);
 
-	public List<String> getTitlesGames();
+	public List<GameResponse> getGames();
+
+	public GameResponse deleteGame(String title);
+
+	public GameResponse updateGame(GameRequest gameDto);
+
 }

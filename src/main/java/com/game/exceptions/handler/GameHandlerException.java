@@ -21,6 +21,8 @@ import com.game.exceptions.generic.GameKOException;
 import com.game.exceptions.generic.GenreKOException;
 import com.game.exceptions.generic.NoContentException;
 import com.game.exceptions.generic.NotFoundException;
+import com.game.exceptions.generic.ShopKOException;
+import com.game.exceptions.generic.StockKOException;
 
 @ControllerAdvice
 public class GameHandlerException extends ResponseEntityExceptionHandler {
@@ -36,6 +38,20 @@ public class GameHandlerException extends ResponseEntityExceptionHandler {
 	@ExceptionHandler({ GenreKOException.class })
 	@ResponseBody
 	public ErrorDto genreKO(HttpServletRequest request, GenreKOException exception) {
+		return new ErrorDto("00", exception.getDetalle());
+	}
+
+	@ResponseStatus(HttpStatus.OK)
+	@ExceptionHandler({ ShopKOException.class })
+	@ResponseBody
+	public ErrorDto shopKO(HttpServletRequest request, ShopKOException exception) {
+		return new ErrorDto("00", exception.getDetalle());
+	}
+
+	@ResponseStatus(HttpStatus.OK)
+	@ExceptionHandler({ StockKOException.class })
+	@ResponseBody
+	public ErrorDto stockKO(HttpServletRequest request, StockKOException exception) {
 		return new ErrorDto("00", exception.getDetalle());
 	}
 

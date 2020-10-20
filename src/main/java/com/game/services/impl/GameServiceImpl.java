@@ -41,27 +41,44 @@ public class GameServiceImpl implements GameService {
 
 	@Override
 	public void addGames(ArrayList<GameRequest> gameDtos) {
-		/*
-		 * addGame(gameDtos.get(3)); gameDtos.stream().map(e -> addGame(e));
-		 * gameDtos.forEach(e -> addGame(e));
-		 */
+		gameDtos.forEach(e -> addGame(e)); // When the array get a game that exists next ones are not add. Just for dev
 	}
 
 	@Override
 	public GameResponse getGame(String title) {
 		Game game = gameRepository.findByTitle(title);
 		gameServiceHelper.checkIfGameExists(game);
-		GameResponse gameResponse = cs.convert(game, GameResponse.class);
-
-		return gameResponse;
+		return cs.convert(game, GameResponse.class);
 	}
 
 	@Override
-	public List<String> getTitlesGames() {
-		List<String> titles = new ArrayList<>();
-		/*
-		 * gamesList.forEach(e -> titles.add(e.getTitle()));
-		 */ return titles;
+	public List<GameResponse> getGames() {
+		return gameRepository.findAll().stream().map(g -> cs.convert(g, GameResponse.class))
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public GameResponse deleteGame(String title) {
+		Game game = gameRepository.findByTitle(title);
+		gameServiceHelper.checkIfGameExists(game);
+		gameRepository.delete(game);
+		return cs.convert(game, GameResponse.class);
+	}
+
+	@Override
+	public GameResponse updateGame(GameRequest gameDto) {
+		gameServiceHelper.checkIfNewTitleIsValid(gameDto.getNewTitle());
+		Game game = gameRepository.findByTitle(gameDto.getTitle());
+		gameServiceHelper.checkIfGameExists(game);
+		List<Genre> genres = gameDto.getGenre().stream().map(e -> genreService.findByGenre(e))
+				.collect(Collectors.toList());
+		if (!gameDto.getNewTitle().isEmpty())
+			game.setTitle(gameDto.getNewTitle());
+		game.setGenres(genres);
+		game.setDescription(gameDto.getDescription());
+		game.setRelease(gameDto.getRelease());
+		gameRepository.save(game);
+		return cs.convert(game, GameResponse.class);
 	}
 
 }

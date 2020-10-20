@@ -25,6 +25,9 @@ This project is just to practice SpringBoot and also to show my tutor how my cod
 - **Eclipse 2020-09 (4.17.0)**
 - **Maven**
 - **Spring(SpringBoot v2.3.4)**
+- [**XAMPP(Apache+MySQL)**](https://www.apachefriends.org/index.html)
+- **Postman**
+
 
 # Setup🔧
 

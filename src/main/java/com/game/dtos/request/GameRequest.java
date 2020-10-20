@@ -13,10 +13,12 @@ import lombok.Data;
 @Data
 public class GameRequest {
 
-	@NotEmpty(message = "Los valores no pueden estar vacio")
+	@NotEmpty(message = "Values can not be empties")
 	private String title, description;
 	private List<GenreEnum> genre;
-	@NotNull(message = "La fecha no puede estar vacia")
+	@NotNull(message = "Date can not be empty")
 	private Date release;
+
+	private String newTitle;
 
 }
