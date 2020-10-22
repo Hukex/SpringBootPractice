@@ -5,7 +5,7 @@ import com.game.exceptions.generic.StockKOException;
 public class TicketKOAlreadyAddedException extends StockKOException {
 
 	private static final long serialVersionUID = 1L;
-	private static final String DETAIL = "Ticket Already created for that game and client";
+	private static final String DETAIL = "Ticket Already created for that game/shop and client";
 
 	public TicketKOAlreadyAddedException(String detalle) {
 		super(detalle);

@@ -23,7 +23,7 @@ public class Ticket {
 	Client client;
 
 	@ManyToOne
-	@JoinColumn(name = "game")
-	Game game;
+	@JoinColumn(name = "stock")
+	Stock stock;
 
 }

@@ -45,7 +45,4 @@ public class Game {
 	@OneToMany(mappedBy = "game")
 	private List<Stock> stocks;
 
-	@OneToMany(mappedBy = "game")
-	private List<Ticket> tickets;
-
 }

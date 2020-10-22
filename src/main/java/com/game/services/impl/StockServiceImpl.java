@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.game.dtos.request.StockRequest;
 import com.game.dtos.response.StockResponse;
 import com.game.entities.Stock;
+import com.game.exceptions.StockKOStockFinished;
 import com.game.helpers.StockServiceHelper;
 import com.game.repositories.StockRepository;
 import com.game.services.StockService;
@@ -62,6 +63,8 @@ public class StockServiceImpl implements StockService {
 	@Override
 	public StockResponse removeOneToQuantityStock(String name, String gameTitle) {
 		Stock stock = stockServiceHelper.getStockByShopIdAndGameTitle(name, gameTitle);
+		if (stock.getQuantity() <= 0)
+			throw new StockKOStockFinished();
 		stock.setQuantity(stock.getQuantity() - 1);
 		stockRepository.save(stock);
 		return cs.convert(stock, StockResponse.class);

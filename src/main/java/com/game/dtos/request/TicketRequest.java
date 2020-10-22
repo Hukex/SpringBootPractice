@@ -8,7 +8,7 @@ import lombok.Data;
 public class TicketRequest {
 
 	@NotEmpty(message = "Values can not be empties")
-	private String client, game;
+	private String client, game, shop;
 
 	private Long id;
 

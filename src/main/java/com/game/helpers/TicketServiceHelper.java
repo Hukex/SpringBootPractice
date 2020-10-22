@@ -8,26 +8,26 @@ import org.springframework.stereotype.Service;
 
 import com.game.dtos.request.TicketRequest;
 import com.game.entities.Client;
-import com.game.entities.Game;
+import com.game.entities.Stock;
 import com.game.entities.Ticket;
 import com.game.exceptions.TicketKOAlreadyAddedException;
 import com.game.exceptions.TicketKONotFoundException;
 import com.game.repositories.ClientRepository;
-import com.game.repositories.GameRepository;
 import com.game.repositories.TicketRepository;
+import com.game.services.StockService;
 
 @Service
 public class TicketServiceHelper {
 	@Autowired
 	private TicketRepository ticketRepository;
 	@Autowired
-	private GameRepository gameRepository;
-	@Autowired
 	private ClientRepository clientRepository;
 	@Autowired
-	private GameServiceHelper gameServiceHelper;
-	@Autowired
 	private ClientServiceHelper clientServiceHelper;
+	@Autowired
+	private StockServiceHelper stockServiceHelper;
+	@Autowired
+	private StockService stockService;
 	@Autowired
 	private ConversionService cs;
 
@@ -48,14 +48,14 @@ public class TicketServiceHelper {
 	}
 
 	public Ticket checkIfAllParamsAreValid(TicketRequest ticketDto) {
-		Game game = gameRepository.findByTitle(ticketDto.getGame());
-		gameServiceHelper.checkIfGameExists(game);
+		Stock stock = stockServiceHelper.getStockByShopIdAndGameTitle(ticketDto.getShop(), ticketDto.getGame());
 		Client client = clientRepository.findByCard(ticketDto.getClient());
 		clientServiceHelper.checkIfClientExists(client);
-		checkIfTicketIsAlreadyAdded(ticketRepository.findByClientAndGame(client, game));
+		checkIfTicketIsAlreadyAdded(ticketRepository.findByClientAndStock(client, stock));
 		Ticket ticket = cs.convert(ticketDto, Ticket.class);
-		ticket.setGame(game);
+		ticket.setStock(stock);
 		ticket.setClient(client);
+		stockService.removeOneToQuantityStock(ticketDto.getShop(), ticketDto.getGame());
 		return ticket;
 	}
 

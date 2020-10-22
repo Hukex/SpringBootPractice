@@ -61,8 +61,9 @@ public class GameServiceImpl implements GameService {
 	public GameResponse deleteGame(String title) {
 		Game game = gameRepository.findByTitle(title);
 		gameServiceHelper.checkIfGameExists(game);
+		GameResponse gr = cs.convert(game, GameResponse.class);
 		gameRepository.delete(game);
-		return cs.convert(game, GameResponse.class);
+		return gr;
 	}
 
 	@Override

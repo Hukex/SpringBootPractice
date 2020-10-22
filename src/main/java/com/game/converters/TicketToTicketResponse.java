@@ -15,7 +15,8 @@ public class TicketToTicketResponse implements Converter<Ticket, TicketResponse>
 		sr.setCard(ticket.getClient().getCard());
 		sr.setName(ticket.getClient().getName());
 		sr.setSurname(ticket.getClient().getSurname());
-		sr.setTitle(ticket.getGame().getTitle());
+		sr.setTitle(ticket.getStock().getGame().getTitle());
+		sr.setShopName(ticket.getStock().getShop().getName());
 		sr.setId(ticket.getId());
 		return sr;
 	}
