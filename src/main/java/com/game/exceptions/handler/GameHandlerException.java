@@ -17,12 +17,14 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.game.dtos.ErrorDto;
+import com.game.exceptions.generic.ClientKOException;
 import com.game.exceptions.generic.GameKOException;
 import com.game.exceptions.generic.GenreKOException;
 import com.game.exceptions.generic.NoContentException;
 import com.game.exceptions.generic.NotFoundException;
 import com.game.exceptions.generic.ShopKOException;
 import com.game.exceptions.generic.StockKOException;
+import com.game.exceptions.generic.TicketKOException;
 
 @ControllerAdvice
 public class GameHandlerException extends ResponseEntityExceptionHandler {
@@ -52,6 +54,20 @@ public class GameHandlerException extends ResponseEntityExceptionHandler {
 	@ExceptionHandler({ StockKOException.class })
 	@ResponseBody
 	public ErrorDto stockKO(HttpServletRequest request, StockKOException exception) {
+		return new ErrorDto("00", exception.getDetalle());
+	}
+
+	@ResponseStatus(HttpStatus.OK)
+	@ExceptionHandler({ ClientKOException.class })
+	@ResponseBody
+	public ErrorDto clientKO(HttpServletRequest request, ClientKOException exception) {
+		return new ErrorDto("00", exception.getDetalle());
+	}
+
+	@ResponseStatus(HttpStatus.OK)
+	@ExceptionHandler({ TicketKOException.class })
+	@ResponseBody
+	public ErrorDto ticketKO(HttpServletRequest request, TicketKOException exception) {
 		return new ErrorDto("00", exception.getDetalle());
 	}
 

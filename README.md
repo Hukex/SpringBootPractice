@@ -13,11 +13,11 @@
 
 **Date**: October, 2020.   
 
-This project is just to practice SpringBoot and also to show my tutor how my code was made.
+This project was just to practice SpringBoot and also to show my tutor how my code was made.
 
 # Preview🔍
 
-**In this case there is not preview sorry.**
+**In this project there is not preview sorry.**
 
 # Technologies💻
 
@@ -45,9 +45,10 @@ Import project to Eclipse(my case) and you can work with it.
 
 # Status⚪
 
-**In progress**
+**Finished**
 
-It is only for practicing so right now i'm working with this project.
+It was only for practicing so it's finished.
+Maybe I use this project to work with Angular.
 
 # Contact📞
 
